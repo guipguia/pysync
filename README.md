@@ -14,13 +14,12 @@ Do not build your own image with your private ssh file inside it. The best way o
 podman run --mount type=bind,src=<YOUR .ssh DIR>,dst=/root/.ssh
 ```
 
-
 ## Quick Start
 
 You can subsititue `podman` to `docker` if you are using docker.
 
 ```bash
-podman run --mount type=bind,src=<YOUR .ssh DIR>,dst=/root/.ssh pysync:latest <ARGS>
+podman run --mount type=bind,src=<YOUR .ssh DIR>,dst=/root/.ssh quay.io/guipguia/pysync:v0.0.1 <ARGS>
 ```
 
 
