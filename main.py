@@ -1,20 +1,32 @@
 import argparse, time, os
 from subprocess import Popen, PIPE
 
-def test_args():
-    if args.remote:
-        set_remote_command()
-    else:
-        set_local_command()
+def get_env(name: str):
+    return os.getenv(name, default=None)
+
+
+def get_required_env(var: str):
+    variable = get_env(var)
+    if variable == None:
+        raise Exception('Couldn\'t find %s env.' % var)
 
 def set_local_command():
     global command
-    command = ['rsync', '-a', args.src, args.dst]
+
+    src = get_required_env('SYNC_SOURCE_DIR')
+    dst = get_required_env('SYNC_DESTINATION_DIR')
+
+    command = ['rsync', '-a', src, dst]
 
 def set_remote_command():
     global command
-    command = ['rsync', '-a', args.src, '%s@%s:%s' % (args.username, args.host, args.dst)]
 
+    src = get_required_env('SYNC_SOURCE_DIR')
+    dst = get_required_env('SYNC_DESTINATION_DIR')
+    username = get_required_env('SYNC_USERNAME')
+    host = get_required_env('SYNC_HOST')
+
+    command = ['rsync', '-a', src, '%s@%s:%s' % (username, host, dst)]
 
 def run():
     while True:
@@ -26,23 +38,21 @@ def run():
 
 def main():
     # start_folder_observer()
-    print('Start to sync local %s with %s...' % (args.src, args.dst))
+    src = get_required_env('SYNC_SOURCE_DIR')
+    dst = get_required_env('SYNC_DESTINATION_DIR')
+    print('Start to sync local %s with %s...' % (src, dst))
     run()
     
 
 
 if __name__ == '__main__':
-    global args
-
-    parser = argparse.ArgumentParser(description='PySync arguments.')
-    parser.add_argument('--src', '-s', help='Source folder to sync with destination folder. (This is where your files are, soruce of truth).', required=True)
-    parser.add_argument('--dst', '-d', help='Destination folder, this is where the files that are in src folder are going to.', required=True)
-    parser.add_argument('--remote', '-r', action=argparse.BooleanOptionalAction, help='Enable remote sync mode.', required=False)
-    parser.add_argument('--key', '-k', help='Location to your private ssh-key. (This key should be in authrozied_keys on the destination server.)', required=False)
-    parser.add_argument('--username', '-u', help='Username for remote connection.')
-    parser.add_argument('--host', '--ip', '-c', help='Ip/Hostname for the remote connection. eg(myserver.example.com)')
-
-    args = parser.parse_args()
+    remote = get_env('SYNC_REMOTE')
     
-    test_args()
+    if remote:
+        print('remote...')
+        set_remote_command()
+    else:
+        print('not remote')
+        set_local_command()
+    
     main()

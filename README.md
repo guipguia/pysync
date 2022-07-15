@@ -23,13 +23,12 @@ podman run --mount type=bind,src=<YOUR .ssh DIR>,dst=/root/.ssh quay.io/guipguia
 ```
 
 
-## Arguments
+## Variables
 
-| Argument   | Shortcut | Description                                                                                           | Required           |
-|------------|----------|-------------------------------------------------------------------------------------------------------|--------------------|
-| --src      | -s       | Source folder to sync with destination folder.  (This is where your files are, soruce of truth).      | :heavy_check_mark: |
-| --dst      | -d       | Destination folder, this is where the files  that are in src folder are going to.                     | :heavy_check_mark: |
-| --remote   | -r       | Enable remote sync mode.                                                                              |         :x:        |
-| --key      | -k       | Location to your private ssh-key.  (This key should be in authrozied_keys on the destination server.) |         :x:        |
-| --username | -u       | Username for remote connection.                                                                       |         :x:        |
-| --host     | -ip      | Ip/Hostname for the remote connection. eg(myserver.example.com)                                       |         :x:        |
+| Env Var              | Description                                                                                      | Loca/Remote |
+|----------------------|--------------------------------------------------------------------------------------------------|-------------|
+| SYNC_SOURCE_DIR      | Source folder to sync with destination folder.  (This is where your files are, soruce of truth). | Both        |
+| SYNC_DESTINATION_DIR | Destination folder, this is where the files  that are in src folder are going to.                | Both        |
+| SYNC_REMOTE          | Enable remote sync mode.                                                                         | Remote      |
+| SYNC_USERNAME        | Username for remote connection.                                                                  | Remote      |
+| SYNC_HOST            | Ip/Hostname for the remote connection. eg(myserver.example.com)                                  | Remote      |
