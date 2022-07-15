@@ -19,7 +19,7 @@ podman run --mount type=bind,src=<YOUR .ssh DIR>,dst=/root/.ssh
 You can subsititue `podman` to `docker` if you are using docker.
 
 ```bash
-podman run --mount type=bind,src=<YOUR .ssh DIR>,dst=/root/.ssh quay.io/guipguia/pysync:v0.0.1 <ARGS>
+podman run --mount type=bind,src=<YOUR .ssh DIR>,dst=/root/.ssh quay.io/guipguia/pysync:v0.0.2 <ARGS>
 ```
 
 
