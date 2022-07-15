@@ -10,6 +10,7 @@ def get_required_env(var: str):
     variable = get_env(var)
     if variable == None:
         raise Exception('Couldn\'t find %s env.' % var)
+    return variable
 
 def set_local_command():
     global command
@@ -50,10 +51,8 @@ if __name__ == '__main__':
     remote = get_env('SYNC_REMOTE')
     
     if remote:
-        print('remote...')
         set_remote_command()
     else:
-        print('not remote')
         set_local_command()
     
     main()
