@@ -2,7 +2,8 @@ import argparse, time, os
 from subprocess import Popen, PIPE
 
 def get_env(name: str):
-    return os.getenv(name, default=None)
+    var = os.getenv(name, default=None)
+    return str(var)
 
 
 def get_required_env(var: str):
