@@ -28,7 +28,7 @@ def set_remote_command():
     username = get_required_env('SYNC_USERNAME')
     host = get_required_env('SYNC_HOST')
 
-    command = ['rsync', '-a', src, '%s@%s:%s' % (username, host, dst)]
+    command = ['rsync', '-a', '--omit-dir-times', src, '%s@%s:%s' % (username, host, dst)]
 
 def run():
     while True:
