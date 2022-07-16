@@ -35,7 +35,8 @@ def run():
         process = Popen(command, stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
         if stderr != b'':
-            raise Exception(stderr)
+            print(stderr)
+            raise Exception('Could not execute command: %s' % command)
         time.sleep(30)
 
 def main():
